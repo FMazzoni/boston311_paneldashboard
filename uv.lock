@@ -164,6 +164,7 @@ dependencies = [
     { name = "panel" },
     { name = "pyarrow" },
     { name = "pyogrio" },
+    { name = "requests" },
     { name = "setuptools" },
     { name = "watchfiles" },
 ]
@@ -193,6 +194,7 @@ requires-dist = [
     { name = "panel", specifier = ">=1.7.5" },
     { name = "pyarrow", specifier = ">=21.0.0" },
     { name = "pyogrio", specifier = ">=0.11.1" },
+    { name = "requests", specifier = ">=2.31.0" },
     { name = "setuptools", specifier = ">=80.9.0" },
     { name = "watchfiles", specifier = ">=1.1.0" },
 ]
