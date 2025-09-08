@@ -1,0 +1,28 @@
+name: Mirror to Hugging Face
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v3
+
+      - name: Push to Hugging Face
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions[bot]"
+
+          # Add HF remote using token
+          git remote add hf https://huggingface.co/spaces/fmazzoni/boston311
+
+          # Authenticate with token
+          git config credential.helper store
+          echo "https://fmazzoni:${{ secrets.HF_TOKEN }}@huggingface.co" > ~/.git-credentials
+
+          # Push current branch to HF
+          git push hf main --force
