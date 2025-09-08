@@ -1,3 +1,13 @@
+---
+title: Boston 311 Service Requests Dashboard
+emoji: 🏛️
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Boston 311 Service Requests Dashboard
 
 An **interactive geospatial dashboard** for exploring Boston's 311 service request data from 2011-2025, built with modern Python data visualization technologies.
