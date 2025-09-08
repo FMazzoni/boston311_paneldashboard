@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir uv
 
-# Copy pyproject.toml and uv.lock first for better caching
-COPY pyproject.toml uv.lock ./
+# Copy pyproject.toml, uv.lock, and README.md first for better caching
+COPY pyproject.toml uv.lock README.md ./
 
 # Install dependencies with uv
 RUN uv sync --frozen
