@@ -12,6 +12,8 @@ pinned: false
 
 An **interactive geospatial dashboard** for exploring Boston's 311 service request data from 2011-2025, built with modern Python data visualization technologies.
 
+[![Open in Hugging Face Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-lg-dark.svg)](https://huggingface.co/spaces/fmazzoni/boston311)
+
 ![Dashboard Preview](https://img.shields.io/badge/Status-Active-green)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
 ![Panel](https://img.shields.io/badge/Panel-Dashboard-orange)
@@ -200,6 +202,7 @@ DEFAULT_POINT_COLOR = (255, 140, 0, 255)
 
 ## 🔗 Links
 
+- **[🚀 Interactive Dashboard](https://huggingface.co/spaces/fmazzoni/boston311)** - Try the interactive dashboard on Hugging Face Spaces
 - [Boston Open Data Portal](https://data.boston.gov/)
 - [Panel Documentation](https://panel.holoviz.org/)
 - [DuckDB Documentation](https://duckdb.org/docs/)
