@@ -17,28 +17,41 @@ log = logging.getLogger(__name__)
 
 
 def ensure_data_exists():
-    """Ensure data exists, download if necessary."""
+    """Download data from Hugging Face dataset if not present."""
     data_dir = Path("data/raw")
 
-    # Check if data already exists
     if data_dir.exists() and list(data_dir.glob("*.parquet")):
-        parquet_files = list(data_dir.glob("*.parquet"))
-        log.info(
-            f"Data already exists ({len(parquet_files)} files), skipping download."
-        )
         return
 
-    log.info("Data not found, running extraction script...")
+    # Download from HF dataset instead of scraping
+    import duckdb
+    from datasets import load_dataset
+
+    dataset = load_dataset("fmazzoni/boston311-data")
+
+    # log.info("Data not found, running extraction script...")
     data_dir.mkdir(parents=True, exist_ok=True)
+    output_path = data_dir / "boston311.parquet"
 
-    log.info("Starting data extraction process...")
-    result = subprocess.run(["uv", "run", "python", "src/boston311/extract.py"])
+    con = duckdb.connect()
+    data = dataset["train"]._data.table
+    con.install_extension("spatial")
+    con.load_extension("spatial")
 
-    if result.returncode == 0:
-        log.info("Data extraction completed successfully.")
-    else:
-        log.error(f"Data extraction failed (exit code {result.returncode})")
-        log.warning("Continuing without data - some features may not work.")
+    # Load all data without time filtering - using Path directly is safe here
+    sql = """
+        SELECT 
+            * EXCLUDE geometry,
+            CASE 
+                WHEN geom_4326 IS NOT NULL 
+                THEN ST_GeomFromHEXEWKB(geom_4326) 
+            ELSE NULL 
+            END as geometry
+        FROM data
+        WHERE geom_4326 IS NOT NULL 
+    """
+    con.sql(f"COPY ({sql}) TO '{output_path}' (FORMAT 'parquet')")
+    log.info(f"Saved to: {output_path}")
 
 
 def main():
