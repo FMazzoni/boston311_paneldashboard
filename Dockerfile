@@ -43,7 +43,7 @@ EXPOSE 7860
 ENV PANEL_ALLOW_WEBSOCKET_ORIGIN=*
 ENV BOKEH_ALLOW_WS_ORIGIN=*
 ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH \
+    PATH=/app/.venv/bin:/home/user/.local/bin:$PATH \
     UV_PROJECT_ENVIRONMENT=/app/.venv
 
 # Change ownership of the app directory
@@ -51,5 +51,5 @@ USER root
 RUN chown -R user:user /app
 USER user
 
-# Run the application
-CMD ["python", "start.py"]
+# Run the application using uv to ensure proper environment
+CMD ["uv", "run", "python", "start.py"]

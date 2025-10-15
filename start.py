@@ -73,10 +73,8 @@ def main():
         log.error(f"Error: App file not found at {app_path}")
         sys.exit(1)
 
-    # Command to run Panel using uv
+    # Command to run Panel (uv environment is already active)
     cmd = [
-        "uv",
-        "run",
         "panel",
         "serve",
         str(app_path),
